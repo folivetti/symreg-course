@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+    \node[shape=rectangle,draw=black] (plus) {$+$};
+    \node[shape=rectangle,draw=black, right=of plus.west] (times1) {$*$};
+    \node[shape=rectangle,draw=black, below=of plus.west] (times2) {$*$};
+    \node[shape=rectangle,draw=black, right=of times2.west] (x1) {$x$};
+    \node[shape=rectangle,draw=black, below=of times2.west] (one) {$1$};
+   % \node[shape=rectangle,draw=black, right=of one.east] (x2) {$x$};
+    \node[shape=rectangle,dashed,draw=black,fit={(plus) (times1)}] (nplus) {};
+    \node[shape=rectangle,dashed,draw=black,fit={(times2) (x1)}] (ntimes) {};
+    \node[shape=rectangle,dashed,draw=black,fit={(one)}] (none) {};
+   % \node[shape=rectangle,dashed,draw=black,fit={(x2)}] (nx) {};
+    \node[shape=rectangle,draw=black, right=of one.west] (two) {$2$};
+    \node[shape=rectangle,dashed,draw=black,fit={(two)}] (ntwo) {}; 
+
+    \path [->] (plus) edge[bend left= 20] (ntimes);
+    \path [->] (times2) edge (none);
+    \path [->] (times2) edge[in=90,out=-160,loop] (ntimes);
+    \path [->] (plus) edge[bend right= 20] (ntimes);
+    \path [->] (times1) edge[bend left=30] (ntwo);
+    \path [->] (times1) edge (ntimes);
+\end{tikzpicture}
