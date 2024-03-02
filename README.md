@@ -4,3 +4,9 @@ Instructions:
 - Optional: create a python env `python -m venv symreg-slides` and `source symreg-slides/bin/activate`
 - Install requirements: `pip install -r requirement.txt`
 - Compile the markdown with `Template/compila.sh Aula01` replacing Aula01 with the slide name
+
+
+TODO:
+
+- review slides up to Aula06
+- write slides from Aula13 onward
