@@ -1,0 +1,8 @@
+- pandocfilters
+- numpy
+- scipy
+- pandas
+- matplotlib
+- jupyter
+- scikit-learn
+- sympy
