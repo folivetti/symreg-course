@@ -181,6 +181,7 @@ This can be inspect through visual plots and expert knowledge.
 ## Whether the model is generalizable and capable of extrapolation
 \justifying
 
+The SR model is fitted on a limited data set that not necesseraly captures a
 
 ## Boundedness and safe operation under all circumstances
 \justifying
@@ -202,6 +203,8 @@ This can be inspect through visual plots and expert knowledge.
 
 ## Analytical Analysis
 \justifying
+
+https://mindfulmodeler.substack.com/p/how-to-get-from-evaluation-to-final?utm_source=substack&publication_id=1078760&post_id=142713893&utm_medium=email&utm_content=share&utm_campaign=email-share&triggerShare=true&isFreemail=true&r=1pzyx7&triedRedirect=true
 
 ## Next lecture {.standout}
 
