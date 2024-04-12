@@ -198,13 +198,120 @@ The SR model is fitted on a limited data set that not necesseraly captures a
 ## Visual tools
 \justifying
 
-## Splitting Data
+The plots regarding the predictions and residuals can be insightful and provide a tool for model inspection.
+From these plots we can understand whether the model meets our expectations and whether there is any unexpected behavior.
+
+## Noise variance plot {.fragile}
 \justifying
 
-## Analytical Analysis
+One example of a plot is the predicted values against the dependent variable as observed in the data.
+To illustrate this and the next plots, we will fit our simulated grade dataset with PyOperon, PySR and TIR:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+regs = [SymbolicRegressor(),
+        TIRRegressor(100, 100, 0.3, 0.7, (-3, 3), transfunctions='Id',
+           alg='MOO'),
+        PySRRegressor(binary_operators=["+", "*"], unary_operators=[])
+       ]
+for i in range(3):
+  regs[i].fit(x.reshape(-1,1),y)
+```
+
+## Noise variance plot {.fragile}
 \justifying
 
-https://mindfulmodeler.substack.com/p/how-to-get-from-evaluation-to-final?utm_source=substack&publication_id=1078760&post_id=142713893&utm_medium=email&utm_content=share&utm_campaign=email-share&triggerShare=true&isFreemail=true&r=1pzyx7&triedRedirect=true
+We can check the noise variance with:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+name = ['Operon', 'PySR', 'TIR']
+for i in range(3):
+  axs[i].plot(y, regs[i].predict(x.reshape(-1,1)), '.', color='black',
+               markersize=15)
+  axs[i].set_xlabel('y')
+  axs[i].set_ylabel('f(x)')
+  axs[i].set_title(name[i])
+```
+
+## Noise variance plot {.fragile}
+\justifying
+
+![](figs/noise_variance.png)
+
+A perfect model would have all the points in the 45 degrees diagonal.
+
+## Noise variance plot {.fragile}
+\justifying
+
+![](figs/noise_variance.png)
+
+We can see from these plots that none of the models returns a satisfactory result. Also, we can see that all of them have a bias in mispredicting grades below $5$ (usually for a higher grade).
+
+## Q-Q plot {.fragile}
+\justifying
+
+Another important plot is the quantile-quantile plot (Q-Q plot) that plots the assumed error distribution of the data matches the distribution of the residuals of the model.
+
+To make the Q-Q plot, we calculate the residuals of our model, sort them in increasing order, and plot each point against the inverse of the cumulative density function of the assumed distribution.
+
+## Q-Q plot {.fragile}
+\justifying
+
+(qqplot assumes normal distribution as the default)
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+import statsmodels.api as sm
+
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+
+for i in range(3):
+  sm.qqplot(regs[i].predict(x.reshape(-1,1))[:,0]-y, line ='45',
+             ax=axs[i])
+  axs[i].set_title(name[i])
+
+```
+
+## Q-Q plot {.fragile}
+\justifying
+
+![](figs/qq.png)
+
+We can see from these plots that none of the models matches the expected distribution for the residuals.
+
+## Residuals plot {.fragile}
+\justifying
+
+Another interesting plot is the residuals plots in which we plot a choice of $x_i$ against $f(x)$ and the residuals:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+import statsmodels.api as sm
+
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+
+for i in range(3):
+  axs[i].plot(x, regs[i].predict(x.reshape(-1,1))[:,0] - y, '.',
+                 color='blue', alpha=0.3, markersize=5)
+  axs[i].plot(x, regs[i].predict(x.reshape(-1,1)), '.', color='red',
+              markersize=15)
+  axs[i].set_xlabel('x')
+  axs[i].set_ylabel('f(x) - y')
+  axs[i].set_title(name[i])
+
+```
+
+## Residuals plot {.fragile}
+\justifying
+
+![](figs/residuals.png)
+
+These plots show that all of these models have an error ranging from $-4$ to $4$ but mostly concentrated on neagtive residuals. This means it tends to understimate the true value.
+
+## Residuals plot {.fragile}
+\justifying
+
+![](figs/residuals.png)
+
+Also, we can see that Operon created a model with some discontinuities (possibily because of division) and TIR chose a linear model.
 
 ## Next lecture {.standout}
 
