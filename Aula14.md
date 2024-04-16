@@ -12,6 +12,24 @@ date: 05 February, 2024
 
 # Model Selection
 
+## Validation data
+
+## Single Split
+## Cross-Validation
+## Stratified
+## Weights
+
+## Theoretic Information
+
+## Evidence
+
+## BIC
+
+## AIC
+
+## MDL
+
+
 ## Next lecture {.standout}
 
 \begin{block}{}
