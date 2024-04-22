@@ -130,6 +130,7 @@ We can try to understand the behavior with a plot for different values of $\thet
 ::::columns
 :::column
 \begin{tikzpicture}
+\pgfplotsset{width=7cm,compat=1.18}
 \begin{axis}[domain=0:5,samples=1000]
 \addplot [very thick,red] {2*x/(0.25 + x)};
 \addplot [very thick,blue] {5*x/(0.25 + x)};
@@ -143,7 +144,8 @@ We can try to understand the behavior with a plot for different values of $\thet
 - The higher the value of $\theta_2$, the slower the speed to reach the saturation
 - When $x = \theta_2$, $f(x; \theta) = 0.5 \theta_1$, so it is the point where we reach about half saturation
 - There is an undefined behavior at $x = -\theta_2$
-::::columns
+:::
+::::
 
 ## Ability to understand and explain model behavior
 \justifying
@@ -182,8 +184,7 @@ This can be inspected through visual plots and expert knowledge.
 
 The SR model is fitted on a limited data set that does not necesseraly captures the whole domain.
 
-% replace this
-\begin{tikzpicture}\begin{axis}[domain=-15:40, ymin=-1.5, ymax=1.5, legend pos=south east,scale only axis=true,width=0.4\textwidth,height=0.3\textwidth,tick label style={font=\tiny},label style={font=\tiny}, legend style={font=\tiny}]
+\begin{tikzpicture}\begin{axis}[domain=-15:40, ymin=-1.5, ymax=1.5, legend pos=south east,scale only axis=true,width=0.6\textwidth,height=0.3\textwidth,tick label style={font=\tiny},label style={font=\tiny}, legend style={font=\tiny}]
       \addplot[domain=-15:40, samples=1000, olive, thick]{0.191257247217522*sin(deg(5.5016*x)) + 1.0011*tanh(0.2641*x + 0.0458257569495584*sqrt(abs(x))) - 0.0247};
       \addplot[domain=-15:40, samples=1000, red, thick]{0.333333333333333*x/sqrt(0.111111111111111*x*2 + 1)};
       \addplot[domain=-15:40, samples=1000, blue, thick]{0.989484*tanh(0.274847*x + 0.0440621) - 0.00121047};
@@ -306,20 +307,123 @@ We can measure fairness and equity as:
 - Counterfactual equity: given a positive outcome, this is unaffected when changing the protected variables
 
 
-## Behaves according to pre-established norms.
-\justifying
-
-
 ## Visual tools
 \justifying
 
-## Splitting Data
+The plots regarding the predictions and residuals can be insightful and provide a tool for model inspection.
+From these plots we can understand whether the model meets our expectations and whether there is any unexpected behavior.
+
+## Noise variance plot {.fragile}
 \justifying
 
-## Analytical Analysis
+One example of a plot is the predicted values against the dependent variable as observed in the data.
+To illustrate this and the next plots, we will fit our simulated grade dataset with PyOperon, PySR and TIR:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+regs = [SymbolicRegressor(),
+        TIRRegressor(100, 100, 0.3, 0.7, (-3, 3), transfunctions='Id',
+           alg='MOO'),
+        PySRRegressor(binary_operators=["+", "*"], unary_operators=[])
+       ]
+for i in range(3):
+  regs[i].fit(x.reshape(-1,1),y)
+```
+
+## Noise variance plot {.fragile}
 \justifying
 
-https://mindfulmodeler.substack.com/p/how-to-get-from-evaluation-to-final
+We can check the noise variance with:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+name = ['Operon', 'PySR', 'TIR']
+for i in range(3):
+  axs[i].plot(y, regs[i].predict(x.reshape(-1,1)), '.', color='black',
+               markersize=15)
+  axs[i].set_xlabel('y')
+  axs[i].set_ylabel('f(x)')
+  axs[i].set_title(name[i])
+```
+
+## Noise variance plot {.fragile}
+\justifying
+
+![](figs/noise_variance.png)
+
+A perfect model would have all the points in the 45 degrees diagonal.
+
+## Noise variance plot {.fragile}
+\justifying
+
+![](figs/noise_variance.png)
+
+We can see from these plots that none of the models returns a satisfactory result. Also, we can see that all of them have a bias in mispredicting grades below $5$ (usually for a higher grade).
+
+## Q-Q plot {.fragile}
+\justifying
+
+Another important plot is the quantile-quantile plot (Q-Q plot) that plots the assumed error distribution of the data matches the distribution of the residuals of the model.
+
+To make the Q-Q plot, we calculate the residuals of our model, sort them in increasing order, and plot each point against the inverse of the cumulative density function of the assumed distribution.
+
+## Q-Q plot {.fragile}
+\justifying
+
+(qqplot assumes normal distribution as the default)
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+import statsmodels.api as sm
+
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+
+for i in range(3):
+  sm.qqplot(regs[i].predict(x.reshape(-1,1))[:,0]-y, line ='45',
+             ax=axs[i])
+  axs[i].set_title(name[i])
+
+```
+
+## Q-Q plot {.fragile}
+\justifying
+
+![](figs/qq.png)
+
+We can see from these plots that none of the models matches the expected distribution for the residuals.
+
+## Residuals plot {.fragile}
+\justifying
+
+Another interesting plot is the residuals plots in which we plot a choice of $x_i$ against $f(x)$ and the residuals:
+
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+import statsmodels.api as sm
+
+_,axs = plt.subplots(1,3, figsize=(15,5), sharey=True)
+
+for i in range(3):
+  axs[i].plot(x, regs[i].predict(x.reshape(-1,1))[:,0] - y, '.',
+                 color='blue', alpha=0.3, markersize=5)
+  axs[i].plot(x, regs[i].predict(x.reshape(-1,1)), '.', color='red',
+              markersize=15)
+  axs[i].set_xlabel('x')
+  axs[i].set_ylabel('f(x) - y')
+  axs[i].set_title(name[i])
+
+```
+
+## Residuals plot {.fragile}
+\justifying
+
+![](figs/residuals.png)
+
+These plots show that all of these models have an error ranging from $-4$ to $4$ but mostly concentrated on neagtive residuals. This means it tends to understimate the true value.
+
+## Residuals plot {.fragile}
+\justifying
+
+![](figs/residuals.png)
+
+Also, we can see that Operon created a model with some discontinuities (possibily because of division) and TIR chose a linear model.
 
 ## Next lecture {.standout}
 
