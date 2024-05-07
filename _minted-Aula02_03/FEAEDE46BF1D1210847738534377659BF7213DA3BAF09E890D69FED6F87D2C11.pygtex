@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} avg. and std. of mm of rain,}
+\PYG{n}{qtyRain} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}\PYG{p}{(}\PYG{n}{v}\PYG{o}{/}\PYG{l+m+mi}{60}\PYG{p}{)} \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{v} \PYG{o+ow}{in}
+            \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{240}\PYG{p}{,} \PYG{l+m+mi}{215}\PYG{p}{,} \PYG{l+m+mi}{160}\PYG{p}{,} \PYG{l+m+mi}{75}\PYG{p}{,} \PYG{l+m+mi}{75}\PYG{p}{,} \PYG{l+m+mi}{55}\PYG{p}{,} \PYG{l+m+mi}{45}\PYG{p}{,}
+              \PYG{l+m+mi}{40}\PYG{p}{,} \PYG{l+m+mi}{80}\PYG{p}{,} \PYG{l+m+mi}{125}\PYG{p}{,} \PYG{l+m+mi}{145}\PYG{p}{,} \PYG{l+m+mi}{200}\PYG{p}{]}\PYG{p}{)}\PYG{p}{\PYGZcb{}}
+\PYG{n}{rateRain} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}\PYG{n}{v} \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{v} \PYG{o+ow}{in}
+            \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,}
+              \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{]}\PYG{p}{)}\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{mmRain} \PYG{o}{=} \PYG{n}{rng}\PYG{o}{.}\PYG{n}{gamma}\PYG{p}{(}\PYG{n}{qtyRain}\PYG{p}{[}\PYG{n}{month}\PYG{p}{]}\PYG{p}{,} \PYG{n}{rateRain}\PYG{p}{)}
+           \PYG{k}{if} \PYG{n}{isRainy} \PYG{k}{else} \PYG{l+m+mi}{0}
+\end{Verbatim}

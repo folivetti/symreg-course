@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{gauss}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{J}\PYG{p}{,} \PYG{n}{debug}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{sos\PYGZus{}old} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{inf}
+    \PYG{n}{sos} \PYG{o}{=} \PYG{n}{sumofsquares}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{f}\PYG{p}{)}
+    \PYG{n}{step} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{while} \PYG{n}{step} \PYG{o}{\PYGZgt{}} \PYG{l+m+mf}{1e\PYGZhy{}12}
+          \PYG{o+ow}{and} \PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{sos} \PYG{o}{\PYGZhy{}} \PYG{n}{sos\PYGZus{}old}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mf}{1e\PYGZhy{}6}\PYG{p}{:}
+        \PYG{n}{t\PYGZus{}i} \PYG{o}{=} \PYG{n}{gauss\PYGZus{}step}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{t}\PYG{p}{,}\PYG{n}{f}\PYG{p}{,}\PYG{n}{J}\PYG{p}{,}\PYG{n}{step}\PYG{p}{)}
+        \PYG{n}{sos\PYGZus{}old} \PYG{o}{=} \PYG{n}{sos}
+        \PYG{n}{sos} \PYG{o}{=} \PYG{n}{sumofsquares}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t\PYGZus{}i}\PYG{p}{,} \PYG{n}{f}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{sos} \PYG{o}{\PYGZgt{}} \PYG{n}{sos\PYGZus{}old}\PYG{p}{:}
+            \PYG{n}{step} \PYG{o}{=} \PYG{n}{step} \PYG{o}{/} \PYG{l+m+mi}{2}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{t} \PYG{o}{=} \PYG{n}{t\PYGZus{}i}
+    \PYG{k}{return} \PYG{n}{t}
+\end{Verbatim}

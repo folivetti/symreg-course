@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{xi} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.8}\PYG{p}{,} \PYG{l+m+mf}{0.05}\PYG{p}{)}
+\PYG{n}{xi} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{vstack}\PYG{p}{(}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{xi}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,} \PYG{n}{xi}\PYG{p}{]}\PYG{p}{)}\PYG{o}{.}\PYG{n}{T}
+\PYG{n}{c} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{s2}\PYG{o}{*}\PYG{n}{p} \PYG{o}{*} \PYG{n}{f}\PYG{o}{.}\PYG{n}{ppf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{alpha}\PYG{p}{,} \PYG{n}{p}\PYG{p}{,} \PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{xx} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{xi} \PYG{o}{@} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{inv}\PYG{p}{(}\PYG{n}{x}\PYG{o}{.}\PYG{n}{T} \PYG{o}{@} \PYG{n}{x}\PYG{p}{)} \PYG{o}{@} \PYG{n}{xi}\PYG{o}{.}\PYG{n}{T}\PYG{p}{)}
+
+\PYG{n}{yy} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{xx} \PYG{o}{*} \PYG{n}{c}\PYG{p}{)}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{y\PYGZus{}h} \PYG{o}{=} \PYG{n}{xi} \PYG{o}{@} \PYG{n}{betas\PYGZus{}qr}
+\end{Verbatim}

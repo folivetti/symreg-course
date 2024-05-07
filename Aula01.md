@@ -171,7 +171,7 @@ Likewise, every $1.25$ hours in the ETA will reduce the attendancce in the same 
 ## Answer me!
 \justifying
 
-\tipbox{Not only this model will predict the expected attendance but it also shows the effect that each variable has in the outcome.}
+\tipbox{Not only this model will predict the expected attendance but it also shows the association between variables and the outcome.}
 
 ## How to choose a regression model?
 \justifying
@@ -192,7 +192,7 @@ In many situation the researcher assumes linearity of the relationship and settl
 f(x; \theta) = \theta_0 + \theta_1 x_1 + \ldots + \theta_d x_d + \epsilon
 \end{empheq}
 
-with $\epsilon$ being a term associated with measurement error.
+with $\epsilon$ being a term associated with **uncertainties**.
 
 ## Linear Regression 
 \justifying
@@ -231,7 +231,7 @@ In **Polynomial Regression** we add nonlinearity by fitting a polynomial of degr
 f(x; \theta) = \theta_0 + \theta_1 x + \theta_2 x^2
 \end{empheq}
 
-This model describes a nonlinear function but it is still linear in the parameters, since we can rewritte as:
+This model describes a nonlinear function but it is still linear in the parameters, since we can rewrite it as:
 
 \begin{empheq}[box=\mybox]{equation*}
 f(z; \theta) = \theta_0 + \theta_1 z_1 + \theta_2 z_2
@@ -513,21 +513,24 @@ The high variability of the prediction may be an indication that any small event
 
 These concepts and how to calculate such intervals with SR will be covered in lectures 18 and 19.
 
-## Course evaluation criteria 
 
-See the website: 
+% ## Course evaluation criteria
 
-\includegraphics[width=150pt]{figs/qrsite.png}
+%See the website:
 
-[https://folivetti.github.io/teaching/2024-summer-teaching-2](https://folivetti.github.io/teaching/2024-summer-teaching-2)
+%\includegraphics[width=150pt]{figs/qrsite.png}
 
-## Bonus points!
+%[https://folivetti.github.io/teaching/2024-summer-teaching-2](https://folivetti.github.io/teaching/2024-summer-teaching-2)
 
-Bonus points if a majority (80\%) of the students answer the anonymous form: 
+%## Bonus points!
 
-\includegraphics[width=150pt]{figs/qrform.png}
+%Bonus points if a majority (80\%) of the students answer the anonymous form:
 
-[https://forms.gle/xaHtCL4EGN99o6G36](https://forms.gle/xaHtCL4EGN99o6G36)
+%\includegraphics[width=150pt]{figs/qrform.png}
+
+%[https://forms.gle/xaHtCL4EGN99o6G36](https://forms.gle/xaHtCL4EGN99o6G36)
+
+# Closing
 
 ## Terminology learned today
 \justifying

@@ -101,6 +101,8 @@ f(x; \theta) &= \frac{\theta_1 x}{\theta_2 + x} \\
 
 depends only on $\theta_2$. We can exploit this by fitting $\theta_1$ as a linear regression conditional to a value of $\theta_2$.
 
+# Adjusting the parameters
+
 ## Least Squares Estimate
 \justifying
 
@@ -139,8 +141,10 @@ J = \begin{bmatrix}
 So we have:
 
 \begin{empheq}[box=\mybox]{align*}
-f(x; \theta) &\approx f(x; \theta^{(0)}) + J(\theta - \theta^{(0)})
+f(x; \theta) &\approx f(x; \theta^{(0)}) + J \cdot (\theta - \theta^{(0)})^{T}
 \end{empheq}
+
+with $J$ as a $N \times p$ matrix and $\theta$ a $1 \times p$ vector.
 
 ## Gauss-Newton Method
 \justifying
@@ -148,8 +152,8 @@ f(x; \theta) &\approx f(x; \theta^{(0)}) + J(\theta - \theta^{(0)})
 The approximated residuals are:
 
 \begin{empheq}[box=\mybox]{align*}
-z(\theta) &\approx y -  (f(x; \theta^{(0)}) + J(\theta - \theta^{(0)})) \\
-z(\theta) &\approx (y -  (f(x; \theta^{(0)})) - J(\theta - \theta^{(0)}) \\
+z(\theta) &\approx y -  (f(x; \theta^{(0)}) + J \cdot (\theta - \theta^{(0)})) \\
+z(\theta) &\approx (y -  (f(x; \theta^{(0)})) - J \cdot (\theta - \theta^{(0)}) \\
 z(\theta) &\approx z^{(0)} - J \delta \\
 \end{empheq}
 
@@ -248,9 +252,9 @@ The last step increased the sum of squares even though we went towards the desce
 
 In these situations we need to decrease the step size when updating the current value of $\theta$.
 
-A simple heuristic is to start with $1$ and half the value until a threshold.
+A simple heuristic is to start with a step size of $1$ and half the current step size until the value becomes smaller than a threshold.
 
-A better approach is to perform a linea search to find the optimal value for the step size.
+A better approach is to perform a line search to find the optimal value for the step size.
 
 ## Step factor {.fragile}
 
@@ -339,7 +343,9 @@ array([[ 5.10148992],
 ## Initial Conditions
 \justifying
 
-Choosing different starting points can lead to different optima, better or worse than the previous temptative.
+Choosing different starting points can lead to different optima, better or worse than the previous attempt.
+
+# Confidence Intervals
 
 ## Approximating the Confidence Interval
 \justifying
@@ -365,7 +371,7 @@ We can do the same with the linear approximation of the nonlinear model:
 And generate the ellipse with:
 
 \begin{empheq}[box=\mybox]{align*}
-\left\{ \theta = \hat{\theta} + \sqrt{P s^2 F(\alpha, P, N-P)} R_1^T d \mid \|d\| = 1 \right\}
+\left\{ \theta = \hat{\theta} + \sqrt{P s^2 F(\alpha, P, N-P)} R_1^T d \;\middle|\; \|d\| = 1 \right\}
 \end{empheq}
 
 ## Approximating the Confidence Interval
@@ -375,8 +381,8 @@ Similarly, the marginal CI can be calculated as:
 
 \begin{empheq}[box=\mybox]{align*}
 s^2 &= \frac{(y - f(x; \hat{\theta}))^2}{N - P} \\
-se &= \sqrt{s^2 \operatorname{diag}(J^T J)}
-\hat{\theta} \pm se t(\alpha/2, N-P)
+se &= \sqrt{s^2 \operatorname{diag}(J^T J)} \\
+\hat{\theta} &\pm \operatorname{se} \cdot t(\alpha/2, N-P)
 \end{empheq}
 
 ## Approximating the Confidence Interval {.fragile}
@@ -440,7 +446,7 @@ ax.set_ylabel(r"$\theta_2$")
 ## Approximating the Confidence Interval {.fragile}
 \justifying
 
-For the predictions we can calculate with:
+We can calculate the CI of the predictions with:
 
 \begin{empheq}[box=\mybox]{align*}
 \hat{y}^{(i)} &\pm s \| J_i R_1^{-1} \| t(\alpha/2, N-P) \\
@@ -526,6 +532,8 @@ for i in range(2):
 \justifying
 
 ![](figs/confidenceregionNLMulti.png){width=300px}
+
+# Closing
 
 ## Terminology learned today
 \justifying

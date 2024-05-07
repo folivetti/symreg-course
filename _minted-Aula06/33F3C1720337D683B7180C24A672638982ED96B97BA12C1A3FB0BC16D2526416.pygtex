@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{gauss\PYGZus{}step}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t0}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{J}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{p} \PYG{o}{=} \PYG{n}{t0}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{n}{z} \PYG{o}{=} \PYG{n}{y} \PYG{o}{\PYGZhy{}} \PYG{n}{f}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{t0}\PYG{p}{)}
+    \PYG{n}{q}\PYG{p}{,} \PYG{n}{r} \PYG{o}{=} \PYG{n}{sc}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{qr}\PYG{p}{(}\PYG{n}{J}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{t0}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{q1} \PYG{o}{=} \PYG{n}{q}\PYG{p}{[}\PYG{p}{:}\PYG{p}{,}\PYG{p}{:}\PYG{n}{p}\PYG{p}{]}
+    \PYG{n}{r1} \PYG{o}{=} \PYG{n}{r}\PYG{p}{[}\PYG{p}{:}\PYG{n}{p}\PYG{p}{,} \PYG{p}{:}\PYG{n}{p}\PYG{p}{]}
+    \PYG{n}{delta} \PYG{o}{=} \PYG{n}{sc}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{solve\PYGZus{}triangular}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{,} \PYG{n}{q1}\PYG{o}{.}\PYG{n}{T}\PYG{n+nd}{@z}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{t0} \PYG{o}{+} \PYG{n}{delta}
+\end{Verbatim}

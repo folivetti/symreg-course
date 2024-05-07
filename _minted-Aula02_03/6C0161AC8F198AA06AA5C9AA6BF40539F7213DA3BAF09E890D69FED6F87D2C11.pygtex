@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} estimated from SP averages taken}
+\PYG{c+c1}{\PYGZsh{} from https://www.climatestotravel.com/climate/brazil}
+\PYG{c+c1}{\PYGZsh{} sunny, rainy, cloudy}
+\PYG{n}{weather} \PYG{o}{=} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Probability of raining is the avg. number}
+\PYG{c+c1}{\PYGZsh{} of rainy days for each month divided by 30 days}
+\PYG{n}{rainProb} \PYG{o}{=} \PYG{p}{\PYGZob{}} \PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}\PYG{p}{(}\PYG{n}{v}\PYG{o}{/}\PYG{l+m+mi}{30}\PYG{p}{)} \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{v} \PYG{o+ow}{in}
+             \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{18}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{,}\PYG{l+m+mi}{13}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{,}\PYG{l+m+mi}{6}\PYG{p}{,}\PYG{l+m+mi}{7}\PYG{p}{,}\PYG{l+m+mi}{7}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{,}\PYG{l+m+mi}{11}\PYG{p}{,}\PYG{l+m+mi}{13}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{]}\PYG{p}{)}\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{\PYGZsh{} sunny and cloudy probabilities are 80\PYGZpc{} and 20\PYGZpc{}}
+\PYG{c+c1}{\PYGZsh{} of the remaining probability of rain}
+\PYG{n}{sunProb} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{k}\PYG{p}{:}\PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{v}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8} \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{v} \PYG{o+ow}{in} \PYG{n}{rainProb}\PYG{o}{.}\PYG{n}{items}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZcb{}}
+\PYG{n}{cloudProb} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{k}\PYG{p}{:}\PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{v}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.2} \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{v} \PYG{o+ow}{in} \PYG{n}{rainProb}\PYG{o}{.}\PYG{n}{items}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

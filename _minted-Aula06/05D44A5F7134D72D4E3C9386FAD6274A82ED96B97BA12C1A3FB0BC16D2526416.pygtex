@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{t} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{205}\PYG{p}{,} \PYG{l+m+mf}{0.08}\PYG{p}{]}\PYG{p}{)}\PYG{p}{[}\PYG{p}{:}\PYG{p}{,}\PYG{n}{np}\PYG{o}{.}\PYG{n}{newaxis}\PYG{p}{]}
+\PYG{n}{gauss}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{J}\PYG{p}{,} \PYG{k+kc}{True}\PYG{p}{)}
+\end{Verbatim}

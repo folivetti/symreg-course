@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{inv}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{:}
+  \PYG{n}{l} \PYG{o}{=} \PYG{n}{chol}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+  \PYG{n}{tmp} \PYG{o}{=} \PYG{n}{l}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{(}\PYG{p}{)}
+  \PYG{n}{m} \PYG{o}{=} \PYG{n}{x}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+  \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{m}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{l}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{p}{:}
+      \PYG{n}{tot} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{n}{i}\PYG{p}{]}\PYG{p}{,} \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{n}{i}\PYG{p}{]}\PYG{p}{)}
+      \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{,}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{n}{i}\PYG{p}{]}\PYG{p}{,} \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{n}{i}\PYG{p}{]}\PYG{p}{)}\PYG{o}{/}\PYG{n}{l\PYGZus{}ii}
+      \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+  \PYG{n}{x\PYGZus{}inv} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,}\PYG{n}{m}\PYG{p}{)}\PYG{p}{)}
+  \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{m}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{dii} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{p}{]}\PYG{p}{,} \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{x\PYGZus{}inv}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{dii}
+    \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{m}\PYG{p}{)}\PYG{p}{:}
+      \PYG{n}{dij} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{p}{]}\PYG{p}{,} \PYG{n}{tmp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:}\PYG{p}{]}\PYG{p}{)}
+      \PYG{n}{x\PYGZus{}inv}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{dij}
+      \PYG{n}{x\PYGZus{}inv}\PYG{p}{[}\PYG{n}{j}\PYG{p}{,}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{dij}
+  \PYG{k}{return} \PYG{n}{x\PYGZus{}inv}
+\end{Verbatim}

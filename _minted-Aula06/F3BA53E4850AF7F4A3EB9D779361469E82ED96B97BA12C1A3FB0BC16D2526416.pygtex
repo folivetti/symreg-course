@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{fxi} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.8}\PYG{p}{,} \PYG{l+m+mf}{0.05}\PYG{p}{)}\PYG{p}{[}\PYG{p}{:}\PYG{p}{,}\PYG{n}{np}\PYG{o}{.}\PYG{n}{newaxis}\PYG{p}{]}
+\PYG{n}{j} \PYG{o}{=} \PYG{n}{J}\PYG{p}{(}\PYG{n}{xi}\PYG{p}{,} \PYG{n}{theta}\PYG{p}{)}
+
+\PYG{n}{yy} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{norm}\PYG{p}{(}\PYG{n}{j} \PYG{o}{@} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{inv}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{)}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+      \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{s2}\PYG{o}{*}\PYG{n}{p} \PYG{o}{*} \PYG{n}{stats}\PYG{o}{.}\PYG{n}{f}\PYG{o}{.}\PYG{n}{ppf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{alpha}\PYG{p}{,} \PYG{n}{p}\PYG{p}{,} \PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{y\PYGZus{}h} \PYG{o}{=} \PYG{n}{f}\PYG{p}{(}\PYG{n}{xi}\PYG{p}{,} \PYG{n}{theta}\PYG{p}{)}
+\end{Verbatim}

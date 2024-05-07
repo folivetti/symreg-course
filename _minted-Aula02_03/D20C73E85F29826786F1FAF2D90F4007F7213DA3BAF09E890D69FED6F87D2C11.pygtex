@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{sampleSpeed}\PYG{p}{(}\PYG{n}{dayInfo}\PYG{p}{,} \PYG{n}{studentInfo}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{mu} \PYG{o}{=} \PYG{l+m+mi}{40} \PYG{o}{+} \PYG{l+m+mi}{5}\PYG{o}{*}\PYG{n}{dayInfo}\PYG{o}{.}\PYG{n}{isSunny} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{5}\PYG{o}{*}\PYG{n}{dayInfo}\PYG{o}{.}\PYG{n}{isRainy}
+      \PYG{o}{\PYGZhy{}} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mf}{0.2}\PYG{o}{*}\PYG{n}{dayInfo}\PYG{o}{.}\PYG{n}{mmRain}\PYG{p}{)}
+      \PYG{o}{+} \PYG{l+m+mi}{5}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{isSingle}
+      \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{numChildren}
+      \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{isSingle}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{numChildren}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{rng}\PYG{o}{.}\PYG{n}{normal}\PYG{p}{(}\PYG{n}{mu}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}

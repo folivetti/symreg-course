@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{sampleAttend}\PYG{p}{(}\PYG{n}{dayInfo}\PYG{p}{,} \PYG{n}{studentInfo}\PYG{p}{,} \PYG{n}{ETA}\PYG{p}{,} \PYG{n}{hours}\PYG{p}{,} \PYG{n}{exam}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{y} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mf}{16.1} \PYG{o}{+} \PYG{l+m+mf}{11.5}\PYG{o}{*}\PYG{n}{exam} \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{1.3}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mf}{0.4}\PYG{o}{*}\PYG{n}{hours}\PYG{p}{)}
+           \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{1.1}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mf}{0.3}\PYG{o}{*}\PYG{n}{ETA}\PYG{p}{)}
+           \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{3.2}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{numChildren}\PYG{p}{)}
+        \PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{+} \PYG{l+m+mf}{15.2}\PYG{o}{*}\PYG{n}{dayInfo}\PYG{o}{.}\PYG{n}{mmRain}
+        \PYG{o}{+} \PYG{l+m+mf}{21.3}\PYG{o}{*}\PYG{n}{studentInfo}\PYG{o}{.}\PYG{n}{numChildren}\PYG{o}{*}\PYG{n}{dayInfo}\PYG{o}{.}\PYG{n}{isRainy}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{rng}\PYG{o}{.}\PYG{n}{binomial}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{y}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
