@@ -45,7 +45,7 @@ In the current literature, there are some techniques that can extract informatio
 ## Model Validation
 \justifying
 
-With the *vanilla* symbolic regression, you have the possibility of finding a model that attends to all your requirements. To increase the probability of finding the correct model, you need at least one of these:
+With the *vanilla* symbolic regression, you have the possibility of finding a model that meets all your requirements. To increase the probability of finding the correct model, you'll need:
 
 - Noiseless data.
 - Representative data.
@@ -55,7 +55,7 @@ With the *vanilla* symbolic regression, you have the possibility of finding a mo
 ## Model Validation
 \justifying
 
-With the *vanilla* symbolic regression, you have the possibility of finding a model that attends to all your requirements. To increase the probability of finding the correct model, you need at least one of these:
+With the *vanilla* symbolic regression, you have the possibility of finding a model that meets all your requirements. To increase the probability of finding the correct model, you'll need:
 
 - Noiseless data.
 - Representative data.
@@ -130,6 +130,7 @@ We can try to understand the behavior with a plot for different values of $\thet
 ::::columns
 :::column
 \begin{tikzpicture}
+\pgfplotsset{width=7cm,compat=1.18}
 \begin{axis}[domain=0:5,samples=1000]
 \addplot [very thick,red] {2*x/(0.25 + x)};
 \addplot [very thick,blue] {5*x/(0.25 + x)};
@@ -143,7 +144,8 @@ We can try to understand the behavior with a plot for different values of $\thet
 - The higher the value of $\theta_2$, the slower the speed to reach the saturation
 - When $x = \theta_2$, $f(x; \theta) = 0.5 \theta_1$, so it is the point where we reach about half saturation
 - There is an undefined behavior at $x = -\theta_2$
-::::columns
+:::
+::::
 
 ## Ability to understand and explain model behavior
 \justifying
@@ -163,7 +165,6 @@ In short, inspecting the model for the ability of understanding and explaining c
 - Applying expert knowledge
 - Plotting the behavior of the function with different parameter values
 
-
 Additional tools will be given in later lectures when we talk about explainability.
 
 ## Scientific plausibility of the model
@@ -176,24 +177,135 @@ Related to the previous desiderata, scientific plausibility refers to whether th
 - Possesses a phyisical meaning
 - Does not misbehave
 
-This can be inspect through visual plots and expert knowledge.
+This can be inspected through visual plots and expert knowledge.
 
 ## Whether the model is generalizable and capable of extrapolation
 \justifying
 
-The SR model is fitted on a limited data set that not necesseraly captures a
+The SR model is fitted on a limited data set that does not necesseraly captures the whole domain.
+
+\begin{tikzpicture}\begin{axis}[domain=-15:40, ymin=-1.5, ymax=1.5, legend pos=south east,scale only axis=true,width=0.6\textwidth,height=0.3\textwidth,tick label style={font=\tiny},label style={font=\tiny}, legend style={font=\tiny}]
+      \addplot[domain=-15:40, samples=1000, olive, thick]{0.191257247217522*sin(deg(5.5016*x)) + 1.0011*tanh(0.2641*x + 0.0458257569495584*sqrt(abs(x))) - 0.0247};
+      \addplot[domain=-15:40, samples=1000, red, thick]{0.333333333333333*x/sqrt(0.111111111111111*x*2 + 1)};
+      \addplot[domain=-15:40, samples=1000, blue, thick]{0.989484*tanh(0.274847*x + 0.0440621) - 0.00121047};
+      \addplot[domain=-15:40, samples=1000, black] gnuplot[id=erf]{erf(0.22*x) + 0.17*sin(5.5*x)};
+      \addplot +[mark=none, dashed, black] coordinates {(15, -1.5) (15, 1.5)};
+      \addplot +[mark=none, dashed, black] coordinates {(40, -1.5) (40, 1.5)};
+      \legend{operon-easy, uDSR-medium, QLattice-hard, ground-truth}
+    \end{axis}
+\end{tikzpicture}
+
+## Whether the model is generalizable and capable of out-of-domain extrapolation
+\justifying
+
+To verify whether the SR model is well behaved outside the domain we can:
+
+- Plot the model outside the training range (works well up to $2$ dimensions)
+- Assert some desirable properties (monotonicity, concavity, periodicity; but not easy to assert)
+- Collect additional points outside the training domain (may not be possible or it may cost too much)
+
+This is still an open problem and the solution depends on what kind of information we have available.
 
 ## Boundedness and safe operation under all circumstances
 \justifying
 
+The generated model may be a partial function or misbehave at certain extremal points.
+
+For example, if we have a division $f(x)/g(x)$, it will be undefined at $g(x) = 0$. This may create a problem if
+we are using this model in practice. What should we return if that happens?
+
+Sometimes we can observe an exponential growth at the extrema of the domain of $x$, this can reflect on an increased error of the model predictions close to those points.
+
+## Boundedness and safe operation under all circumstances
+\justifying
+
+First of all, we must confirm if such model is accceptable:
+
+- Is there any value of $x$ in which $f(x; \theta)$ is undefined or unbounded?
+- Even if it is bounded, does it show an undesirable behavior (e.g., exponential growth)?
+- Do we have some means to treat such errors?
+- If we want to fit this same model into different data, will it misbehave for a certain $(x; \theta)$?
+
+## Boundedness and safe operation under all circumstances
+\justifying
+
+One solution is to replace the operator set with protected operators:
+
+- Returning a default value on error (e.g., division by $0$ will return $1$)
+- Using composition of operators (e.g., replace $log$ by $log \circ abs$)
+- Using alternative operators that behave similarly to the original (e.g., $AQ(x,y) = x/\sqrt{1 + x^2} \approx x/y$)
+
+## Boundedness and safe operation under all circumstances
+\justifying
+
+We can also evaluate the partiality of the expression using interval arithmetic if we know the domain of $x$.
+In this case, we can penalize or even discard functions that are unsafe for that particular domain.
+
+This can be a good compromise as we can still use the original operators but do not discard them entirely.
+
 ## Efficiency of calculating predictions or computational effort required for training the model
 \justifying
+
+In some situations, the efficiency of the prediction or even to obtain the fitted model is important:
+
+- Limited time or computational budget
+- Real-time system
+- Data set is too large, making the evaluation of large expressions too costly
+
+## Efficiency of calculating predictions or computational effort required for training the model
+\justifying
+
+These objectives influence the choice of operator set (addition costs much less than calculating a trigonometric function), the limits of the expression size, the algorithm implementation, and even the search algorithm.
+
+In some situations a populational search may not be the best choice, even with the cost of generating a worse solution.
 
 ## Ensures a fair inference to different classes of the sample.
 \justifying
 
-## Behaves according to pre-established norms.
+When the model can have a social impact, we need to ensure that the model will not commit a prediction error that negatively affects people's life:
+
+- Arrest someone by mistake
+- Misdiagnose a patient
+
+## Ensures a fair inference to different classes of the sample.
 \justifying
+
+Even worse if those mistakes occur due to bias in the data. We have alread cases of:
+
+- ML models increasing the prediction of fellony for black and latin american people (https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)
+- Learning neo-nazi speech in a conversation bot (https://www.technologyreview.com/s/610634/microsofts-neo-nazi-sexbot-was-a-great-lesson-for-makers-of-ai-assistants/
+)
+
+## Ensures a fair inference to different classes of the sample.
+\justifying
+
+Being unfair is not a fault of SR algorithm, specially this is not a (easily) measurable obejctive.
+
+But, depending on the generated model, SR can at least facilitate the detection of any unfairness. As such, the practitioner should pay attention certain protected variables: genre, etnicity, age, home address, and any other variable that correlates to those
+
+We can eliminate these variables from the dataset before generating the model. A better solution is to inspect the model after it is generated to see how it uses such variable.
+
+## Ensures a fair inference to different classes of the sample.
+\justifying
+
+Example. given a model that suggest treatment for a patient with a certain disease. We should investigate the behavior of the model for certain misbehaviors:
+
+- Holding everything equal, if we change race in the input variable, does it change the recommendation for better treatments?
+- Does the dosage of a certain treatment varies with different race? If it does, is this variation explained and supported by any study? (e.g., a certain genotype is more resistant to treatment)
+
+## Ensures a fair inference to different classes of the sample.
+\justifying
+
+To alleviate this issue during the model search, we can incorporate fairness measures into the objective by either using multi-objective or applying a penalization strategy.
+
+We can measure fairness and equity as:
+
+- Statistical parity: each group has a distribution of responses proportional by their representativiness
+- Inequality impact: whether the average response for two groups are approximately the same
+- Opportunity equality: whether all groups have the same probability of a positive outcome
+- Calibration: whether the false positive rates are equal among the groups
+- Counterfactual equity: given a positive outcome, this is unaffected when changing the protected variables
+
 
 ## Visual tools
 \justifying
