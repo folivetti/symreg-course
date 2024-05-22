@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kr}{data}\PYG{+w}{ }\PYG{k+kt}{Expr}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{k+kt}{Const}\PYG{+w}{ }\PYG{k+kt}{Double}
+\PYG{+w}{            }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kt}{Var}\PYG{+w}{ }\PYG{k+kt}{String}
+\PYG{+w}{            }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kt}{Add}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{n}{a}
+\PYG{+w}{            }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kt}{Sub}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{n}{a}
+\PYG{+w}{            }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kt}{Mul}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{n}{a}
+\PYG{+w}{            }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kt}{Div}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{n}{a}
+
+\PYG{k+kr}{type}\PYG{+w}{ }\PYG{k+kt}{FixExpr}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{k+kt}{Fix}\PYG{+w}{ }\PYG{k+kt}{Expr}
+\end{Verbatim}

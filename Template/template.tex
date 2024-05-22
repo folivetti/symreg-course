@@ -45,6 +45,10 @@ $endif$
 \usepackage{comment}
 \usepackage{tabularx}
 \usepackage{csquotes}
+\usepackage{calc}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage[customcolors,shade]{hf-tikz}
 
 % To generate dummy text
 \usepackage{blindtext}
@@ -57,6 +61,8 @@ $endif$
 \usepackage{mathtools}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\hlmath}[3]{\tikzmarkin[fill=#1]{#2}#3\tikzmarkend{#2}}
 
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
@@ -303,8 +309,7 @@ $endfor$
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
-\usepackage{xcolor}
-\usepackage{cancel}
+
 
 \definecolor{OliveGreen}{RGB}{128,128,0}
 \definecolor{commentgreen}{RGB}{2,112,10}

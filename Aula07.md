@@ -10,7 +10,7 @@ cover: figs/cover.png
 date: 05 February, 2024
 ---
 
-# Symbolic Regression
+# Not linear but not nonlinear
 
 ## Let's keep things linear
 \justifying
@@ -45,7 +45,7 @@ For example, we can have:
 ## Let's keep things linear
 \justifying
 
-This will add some nonlinearity to our model without losing the benefit of fitting a linear model.
+This will add some nonlinearity to our model without losing the benefit of fitting a model linear in the parameters.
 
 \begin{tikzpicture}
 \begin{axis}[legend pos=outer north east, domain=1:50]
@@ -59,12 +59,17 @@ This will add some nonlinearity to our model without losing the benefit of fitti
 ## Let's keep things linear
 \justifying
 
-With this transformation, we now have a hypothesis space composed of all possible transformations:
+With this transformation, we now have a **hypothesis space** composed of all possible transformations:
 
 \begin{empheq}[box=\mybox]{align*}
 \mathcal{F}_\phi &= \left\{ f(\phi(x); \beta) = \beta \phi(x) \mid \beta \in \mathbb{R}^d\right\} \\
 \mathcal{F} &= \left\{ f(\phi(x); \beta) = \beta \phi(x) \mid \phi \in \Phi, \beta \in \mathbb{R}^d_\phi\right\} \\
 \end{empheq}
+
+## Hypothesis Space
+\justifying
+
+\notebox{A **hypothesis space** is the set of all candidate models $f : X \rightarrow Y$ considered in the context of the machine learning algorithm. }
 
 ## Let's keep things linear
 \justifying
@@ -94,7 +99,7 @@ Notice that by doing so we will have an additional $O(d^2)$ predictors for quadr
 ## Interactions
 \justifying
 
-If we have the interation between two predictors $x_1, x_2$ modeled as:
+If we have the interaction between two predictors $x_1, x_2$ modeled as:
 
 \begin{empheq}[box=\mybox]{align*}
 f(x; \theta) = \beta_1 + \beta_2 x_1 + \beta_3 x_2 + \beta_4 x_1 x_2
@@ -112,7 +117,7 @@ For example, the effect of a treatment to a person may depend of the age of the 
 ## Let's keep things linear
 \justifying
 
-Another feature transformation is the **piecewise predictors**. These are binary predictors that has a value of $1$ if $x_i$ is between a certain range, and $0$ otherwise.
+Another feature transformation is the **piecewise predictors**. These are binary predictors with a value of $1$ if $x_i$ is between a certain range, and $0$ otherwise.
 
 \begin{empheq}[box=\mybox]{align*}
 \phi(x) = [\mathbf{1}[l_1 < x \leq u_1]; \mathbf{1}[l_2 < x \leq u_3], \ldots, \mathbf{1}[l_i < x \leq u_i]]
@@ -130,6 +135,35 @@ Another feature transformation is the **piecewise predictors**. These are binary
 \addplot coordinates { (7,2) (9,2) };
 \end{axis}
 \end{tikzpicture}
+
+## Piecewise Predictors
+\justifying
+
+If you add many of these predictors we can overfit our data:
+
+\begin{tikzpicture}
+\begin{axis}
+\addplot coordinates { (1,1) (1.1,1) };
+\addplot coordinates { (1.1,1) (1.1,1.05) };
+\addplot coordinates { (1.1,1.05) (1.2,1.05) };
+\addplot coordinates { (1.2,1.05) (1.2,1.12) };
+\addplot coordinates { (1.2,1.12) (1.3,1.12) };
+\addplot coordinates { (1.3,1.12) (1.3,1.19) };
+\addplot coordinates { (1.3,1.19) (1.4,1.19) };
+\addplot coordinates { (1.4,1.19) (1.4,1.1) };
+\addplot coordinates { (1.4,1.1) (1.5,1.1) };
+\addplot coordinates { (1.5,1.1) (1.5,1.02) };
+\addplot coordinates { (1.5,1.02) (1.6,1.02) };
+\addplot coordinates { (1.6,1.02) (1.6,1.2) };
+\addplot coordinates { (1.6,1.2) (1.7,1.2) };
+\addplot coordinates { (1.7,1.2) (1.7,1) };
+\addplot coordinates { (1.7,1) (2,1) };
+\addplot coordinates { (2,1) (2,3) };
+\addplot coordinates { (2,3) (3,3) };
+\end{axis}
+\end{tikzpicture}
+
+# Examples
 
 ## Let's try some transformations {.fragile}
 \justifying
@@ -171,8 +205,8 @@ axs[2,0].plot(df[xcols[ix]].values, df.grade.values, '.',
 ## Let's try some transformations {.fragile}
 \justifying
 
-```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}t.subplots(3,3,
-        figsize=(14,14), sharey=True)
+```{.python frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+t.subplots(3,3, figsize=(14,14), sharey=True)
 ix = 0
 for i, c1 in enumerate(xcols[:3]):
   for j, c2 in enumerate(xcols[3:6]):
@@ -209,10 +243,12 @@ for i, c1 in enumerate(xcols[:3]):
 
 ![](figs/eda_transformations.png){ height=300px }
 
+# Examples of Advanced Machine Learning models
+
 ## Neural Networks
 \justifying
 
-Neural Networks, specifically feed-forward networks[^1], creates a regression model as a chaining of nonlinear functions (called activation) applied to the predictors.
+Neural Networks, specifically feed-forward networks[^1], creates a regression model as a chaining of nonlinear functions (called activation) applied to the linear combination of the predictors.
 
 \begin{empheq}[box=\mybox]{align*}
 f(x; \theta) &= \theta_{13}\tanh(\theta_5 \tanh(\theta_1 x_1 + \theta_2 x_2) + \theta_6 \tan(\theta_3 x_1 + \theta_4 x_2)) \\
@@ -245,6 +281,8 @@ If we add a chain of overparameterized $\tanh$, like the previous example, we ca
 
 ## Neural Networks
 \justifying
+
+Neural Networks often requires a large number of parameters.
 
 This overparameterization reduces the Interpretability capabilities of our model. The effect of any of our predictors is unclear.
 
