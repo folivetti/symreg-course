@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
-\PYG{k}{def} \PYG{n+nf}{sampleGrade}\PYG{p}{(}\PYG{n}{row}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mf}{1.2}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.2}\PYG{o}{*}\PYG{n}{row}\PYG{o}{.}\PYG{n}{hoursWork\PYGZus{}mean}\PYG{p}{)}
-          \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{3.2}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{l+m+mf}{1.5} \PYG{o}{+} \PYG{n}{row}\PYG{o}{.}\PYG{n}{ETA\PYGZus{}mean}\PYG{p}{)}
-          \PYG{o}{+} \PYG{l+m+mf}{3.2}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{l+m+mf}{1.2}\PYG{o}{+}\PYG{n}{row}\PYG{o}{.}\PYG{n}{numAttendence\PYGZus{}max}\PYG{p}{)}
-          \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{1.1} \PYG{o}{*} \PYG{n}{row}\PYG{o}{.}\PYG{n}{numChildren} \PYG{o}{*} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{row}\PYG{o}{.}\PYG{n}{isSingle}\PYG{p}{)}
-      \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mf}{1.5} \PYG{o}{+} \PYG{l+m+mf}{0.5}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mf}{0.9}\PYG{o}{*}\PYG{n}{row}\PYG{o}{.}\PYG{n}{age} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{30}\PYG{p}{)}\PYG{p}{)}
-    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{round}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{clip}\PYG{p}{(}\PYG{n}{rng}\PYG{o}{.}\PYG{n}{normal}\PYG{p}{(}\PYG{n}{y}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{)}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{10}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{)}
-\end{Verbatim}

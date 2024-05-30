@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
-\PYG{c+c1}{\PYGZsh{} joint interval}
-\PYG{n}{omegas} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{2.01}\PYG{p}{,} \PYG{l+m+mf}{0.01}\PYG{p}{)}
-\PYG{n}{const} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{p}\PYG{o}{*}\PYG{n}{s2}\PYG{o}{*}\PYG{n}{f}\PYG{o}{.}\PYG{n}{ppf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{alpha}\PYG{p}{,} \PYG{n}{p}\PYG{p}{,} \PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{)}\PYG{p}{)}
-            \PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{inv}\PYG{p}{(}\PYG{n}{r1}\PYG{p}{)}
-\PYG{n}{betapts} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{n}{betas\PYGZus{}qr} \PYG{o}{+} \PYG{n}{const}
-              \PYG{o}{@} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
-                  \PYG{k}{for} \PYG{n}{w} \PYG{o+ow}{in} \PYG{n}{omegas}\PYG{p}{]}\PYG{p}{)}
-\end{Verbatim}
