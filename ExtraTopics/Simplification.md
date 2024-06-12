@@ -68,7 +68,7 @@ x (y + z) &\equiv xy + xz \\
 ## Optimal Expression
 \justifying
 
-Finding the optimal expression is not simply applying these rules sequentially.
+Finding the optimal expression is not as simple as applying these rules sequentially.
 The order of the application matters, enumerating all possible orders leads to
 a combinatorial explosion.
 
@@ -429,7 +429,7 @@ So, whenever we take the wrong *path*, we cannot go back.
 In [^1] Tate introduced the idea of **Equality Saturation** proposing a method for non-destructive rewriting of the original expression.
 
 The main idea is that all the rules are applied in parallel and the resulting expressions are kept in a compact data structure
-now knownas **e-graph**.
+now known as **e-graph**.
 
 [^1]: Tate, R., et al, "Equality Saturation: a New Approach to Optimization," in Logical Methods in Computer Science, 2011.
 
@@ -451,8 +451,8 @@ the requirements of:
 An e-graph[^3] is composed of:
 
 - a set of e-classes (dashed) with a non-empty sets of e-nodes (solid line).
-- a set of e-nodes that represents one symbol of our language
-- a set of edges connecting one e-node to one or more e-classes.
+- a set of e-nodes representing a symbol of our language
+- a set of edges connecting e-nodes to e-classes.
 
 ## Equality Saturation
 \justifying
@@ -617,7 +617,7 @@ def equality_saturation(expr, rewrites):
             new_eclass = egraph.add(rw.rhs.subst(subst))
             egraph.union(eclass, new_eclass)
 
-        # restore invariants
+        # restore invariants: merge congruent e-classes
         egraph.rebuild()
 
     return egraph.extract_best()
@@ -630,11 +630,11 @@ In the following, let's use as an illustrative example
 the expression $(2 / x) (x + x)$ and the rules:
 
 \begin{empheq}[box=\mybox]{align*}
-x + x &\rightarrow 2x \\
-(x/y)z &\rightarrow x(z/y) \\
-(xy)/z &\rightarrow x(y/z)\\
-x/x &\rightarrow 1\\
-x \cdot 1 &\rightarrow x
+\alpha + \alpha &\rightarrow 2\alpha \\
+(\alpha/\beta) \gamma &\rightarrow \alpha(\gamma/\beta) \\
+(\alpha \beta)/\gamma &\rightarrow \alpha(\beta/\gamma)\\
+\alpha/\alpha &\rightarrow 1\\
+\alpha \cdot 1 &\rightarrow \alpha
 \end{empheq}
 
 ## e-node representation
@@ -658,7 +658,21 @@ which allows us to implement generic algorithms for folding and unfolding data s
 ## e-node representation {.fragile}
 \justifying
 
-An explicit fixed point definition for an expression tree is:
+A natural way to represent an expression tree is using a recursive type:
+
+```{.haskell frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+data Expr   = Const Double
+            | Var String
+            | Add Expr Expr
+            | Sub Expr Expr
+            | Mul Expr Expr
+            | Div Expr Expr
+```
+
+## e-node representation {.fragile}
+\justifying
+
+We can represent the same structure as its least fixed point with:
 
 ```{.haskell frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
 data Expr a = Const Double
@@ -671,7 +685,28 @@ data Expr a = Const Double
 type FixExpr = Fix Expr
 ```
 
-Notice that this structure allows a recursive pattern by replacing the type parameter `a` with `FixExpr`. Also, we may naturally represent an `Add` node that points to an e-class id by making `Add 1 2 :: Expr Int`.
+Notice that this structure allows a recursive pattern by replacing the type parameter `a` with `FixExpr`.
+
+## e-node representation {.fragile}
+\justifying
+
+This structure also give us many conveniences, we can represent and expression `x + 2` as:
+
+```{.haskell frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+Fix (Add (Fix (Var "x") (Fix (Const 2))) :: FixExpr
+```
+
+which types check. But also, we can have represent the e-node `Add` point to the e-classes `3` and `1`:
+
+```{.haskell frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+Add 3 1 :: Expr Int
+```
+
+or a representation of the pattern `_ + _` where each `_` matches anything:
+
+```{.haskell frame=lines framerule=2pt linenos=true fontsize=\footnotesize baselinestretch=0.8}
+Add () () :: Expr ()
+```
 
 ## e-node representation {.fragile}
 \justifying
@@ -725,7 +760,8 @@ Visiting the nodes in a post-order traversal...
 ## Expression to e-node
 \justifying
 
-We create an e-node storing it into a new e-class and assign an e-class id.
+We create a new e-node assiging it a new e-class id. This
+information is stored in a hashcon, where the key is the node and the value is the corresponding e-class id.
 
 \centering
 ![](figs/egraph-expr_to_egraph_3.drawio.png){width=250px}
@@ -862,7 +898,7 @@ If we want to match the rule `("x" / "y") * "z"`, we first retrieve the patterns
 ## Matching rules
 \justifying
 
-Next, we retrieve the left child of these e-classes, generating the set `{2, 5, 6}`.
+Next, we retrieve the left child of these e-classes, generating the set `{2, 5}`.
 
 \centering
 ![](figs/egraph-match.drawio.png){width=250px}
@@ -871,7 +907,7 @@ Next, we retrieve the left child of these e-classes, generating the set `{2, 5, 
 \justifying
 
 Finally, we retrieve the entry `_ / _` from the hash table, finding the e-classes `{2,4}`.
-Intersecting both sets $\left\{2,5,6\right\} \cap \left\{2, 4\right\} = \left\{2\right\}$ we find
+Intersecting both sets $\left\{2,5\right\} \cap \left\{2, 4\right\} = \left\{2\right\}$ we find
 the single match.
 
 \centering
@@ -926,6 +962,35 @@ even smaller expression.
 \centering
 ![](figs/egraph_8.png){width=250px}
 
+## Nonterminating rules
+\justifying
+
+- "General characteristic of equality saturation: either a
+successful rewrite sequence is found relatively quickly, or, computational costs explode" [^12]
+
+[^12]: Thomas Kœhler, Andrés Goens, Siddharth Bhat, Tobias Grosser, Phil Trinder, and Michel Steuwer. 2024. Guided Equality Saturation. Proc. ACM Program. Lang. 8, POPL, Article 58 (January 2024), 32 pages. https://doi.org/10.1145/3632900
+
+## Nonterminating rules
+\justifying
+
+Take as an example the rules $(\alpha + \beta) + \gamma \Rightarrow \alpha + (\beta + \gamma)$, $\alpha + 0 \Rightarrow \alpha$, $(-\alpha) + \alpha \Rightarrow 0$. If we have the expression $(x + (-y)) + y$, it will generate:
+
+\begin{empheq}[box=\mybox]{align*}
+(x + (-y)) + y &\Rightarrow x + ((-y) + y) \\
+               &\Rightarrow (x+(-y))+y)+(-y+y) \\
+               &\Rightarrow \ldots \\
+\end{empheq}
+
+[^13]: https://github.com/egraphs-good/egg/discussions/60
+[^14]: https://effect.systems/blog/ta-completion.html
+
+## Nonterminating rules
+\justifying
+
+![](figs/egraph-nonterm.drawio.png){width=250px}
+
+
+
 ## Additional resources (clickable links)
 \justifying
 
@@ -952,64 +1017,6 @@ $$
 - Interpretation is hindered
 
 [^4]: de Franca, Fabricio Olivetti, and Gabriel Kronberger. "Reducing Overparameterization of Symbolic Regression Models with Equality Saturation." Proceedings of the Genetic and Evolutionary Computation Conference. 2023.
-
-## Automatic Simplification
-
-Consider the expression
-
-$$
-\frac{\theta_1(\theta_2 x + \theta_3 y)}{\theta_4}
-$$
-
-And the simplification rules:
-
-\begin{align}
-\text{distributivity: } & a (b + c) = ab + ac \\
-\text{commutativity: } & a b = b a \\
-\text{associativity: } & (ab)/c = a(b/c)
-\end{align}
-
-## Automatic Simplification
-
-Applying the rules in order will lead to:
-
-$$
-\frac{\theta_1(\theta_2 x + \theta_3 y)}{\theta_4}
-$$
-
-$$
-\frac{\theta_1\theta_2 x + \theta_1 \theta_3 y}{\theta_4}
-$$
-
-$$
-\frac{\gamma_1 x + \gamma_2 y}{\gamma_3}
-$$
-
-## Automatic Simplification
-
-Applying rules $2, 3, 2, 1$ we get:
-
-$$
-\frac{\theta_1(\theta_2 x + \theta_3 y)}{\theta_4}
-$$
-
-$$
-\frac{(\theta_2 x + \theta_3 y)\theta_1}{\theta_4}
-$$
-
-$$
-(\theta_2 x + \theta_3 y)\gamma_1
-$$
-
-$$
-\gamma_1(\theta_2 x + \theta_3 y)
-$$
-
-$$
-\gamma_1x + \gamma_2y
-$$
-
-
 
 ## Research Questions
 
