@@ -129,7 +129,6 @@ Can I?
 Some sentences about interpretability:
 
 - "by virtue of its simplicity, may be easy to interpret"
-- "typically measured as sparsity or model size, is but a proxy for model interpretability; a simple model may still be un-interpretable, or simply wrong"
 - "...resulting expression can be readily interpreted..."
 - "...our method produces closed-form mathematical formulas that have excellent interpretability..."
 - "We argue that the best definition for a “simple” expression is the one that is most interpretable by the user."
@@ -167,8 +166,7 @@ In Genetic and Evolutionary Computation Conference (GECCO ’24), July 14–
 \justifying
 
 - Absorption of light (log of transmittance) ~ concentration of dissolved substance
-- Assumed to be linear up to a certain point and then it becomes a plateau
-- We used $4$ substances with different $\epsilon$ and fixed optical path (1 cm), we measured the relationship of the absorption with the concentration.
+- We used $4$ substances with different properties.
 
 ## Beer's law
 \justifying
@@ -209,9 +207,7 @@ When I started, the SR ecosystem was fragmented:
 - Java that required a certain long gone JRE version.
 - MATLAB ($$).
 - C++ with broken dependencies (it works! \scriptsize if you are using Debian 3 on an Intel 486 machine... \normalsize)
-- DEAP (but you had to implement the main operators).
 - gplearn.
-- This one is simple, just type `build` (oh...it's in Haskell...).
 
 ## SRBench to the rescue!
 \justifying
@@ -251,7 +247,7 @@ Open an issue / discussion at https://github.com/cavalab/srbench/
 We need more!
 
 - Ecosystem of support libraries that allows us to build new algrithms with easy:
-  * Tree data structure
+  * Data structure
   * Evaluation, autodiff
   * Parsing
   * Fitness calculation
@@ -279,6 +275,18 @@ Support library and CLI for handling SR expressions:
 ::: {.column width="40%"}
 ![](figs/srtree.png)
 [https://github.com/folivetti/srtree-opt](https://github.com/folivetti/srtree-opt)
+:::
+::::::::::::::
+
+## Supporting tools - SRTree-Opt
+\justifying
+
+:::::::::::::: {.columns}
+::: {.column width="50%"}
+![](figs/srtree1.png)
+:::
+::: {.column width="50%"}
+![](figs/srtree2.png)
 :::
 ::::::::::::::
 
@@ -455,6 +463,13 @@ It's time to make people aware of SR:
 - Write more books
 - Teach and advertise
 - Stimulate your students to create awesome repositories and tutorials
+
+## Final final words
+
+\notebox{The absence of such applications leads us to state that SR is still a relatively nascent area with the potential to make a big impact .... All that is needed is greater effort and investment.}[^16]
+
+[^16]: Makke, N., Chawla, S. Interpretable scientific discovery with symbolic regression: a review. Artif Intell Rev 57, 2 (2024). https://doi.org/10.1007/s10462-023-10622-0
+
 
 ## Thank you! {.standout}
 
