@@ -246,7 +246,7 @@ Open an issue / discussion at https://github.com/cavalab/srbench/
 
 We need more!
 
-- Ecosystem of support libraries that allows us to build new algrithms with easy:
+- Ecosystem of support libraries that allows us to build new algorithms with easy:
   * Data structure
   * Evaluation, autodiff
   * Parsing
@@ -289,17 +289,6 @@ Support library and CLI for handling SR expressions:
 ![](figs/srtree2.png)
 :::
 ::::::::::::::
-
-## Reliance on defaults
-\justifying
-
-We've built some beliefs throughout the history of GP that were tested on certain settings:
-
-- Rule-of-the-thumb for parameters.
-- Importance of certain operators.
-- Theoretical aspects such as bloat, neutrality, etc.
-
-We need to challenge these findings and keep checking if anything changed with the new approaches.
 
 ## Takeaways
 \justifying
